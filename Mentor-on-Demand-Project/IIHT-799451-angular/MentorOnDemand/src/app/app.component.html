@@ -1,0 +1,58 @@
+
+<div class="row">
+    <nav class="col-12 navbar navbar-expand-md  navbar-dark mynav">
+        <a class="navbar-brand" href="#"><i class="material-icons">assignment_ind</i>Mentor On Demand</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse ml-3 mr-2" id="collapsibleNavbar">
+
+
+            <ul class="navbar-nav  ml-auto">
+
+
+                <li class="nav-item active" *ngIf="loggedIn()">
+                    <a class="nav-link"><i class="material-icons other_icon ">important_devices </i> Portal:
+                        {{this.authService.role1}}</a>
+
+                </li>
+                <li class="nav-item active" *ngIf="loggedIn() && this.authService.role=='Mentor'">
+                    <a class="nav-link" routerLink="mentorpage/">Mentor-Home</a>
+                </li>
+
+                <li class="nav-item active" *ngIf="loggedIn() && this.authService.role=='Mentor'">
+                    <a class="nav-link" routerLink="MentorAddSkill/">Add Skills</a>
+                </li>
+                <li class="nav-item active" *ngIf="!loggedIn()">
+                    <a class="nav-link" routerLink="search-bar/">Home Page</a>
+                </li>
+
+
+                <li class="nav-item active" *ngIf="loggedIn() ">
+                    <a class="nav-link"><i class="material-icons other_icon ">person
+                        </i>{{this.authService.loggedInUser}}</a>
+                </li>
+
+
+
+                <li class="nav-item active" *ngIf="loggedIn()" (click)="this.authService.logout()">
+                    <a class="nav-link" routerLink="homepage/">Logout</a>
+                </li>
+
+                <li class="nav-item active" *ngIf="!loggedIn()">
+                    <a class="nav-link" routerLink="login/">Login</a>
+                </li>
+
+                <li class="nav-item dropdown" *ngIf="!loggedIn()">
+                    <a class="nav-link" routerLink="signup/">User Signup</a>
+                </li>
+
+
+            </ul>
+        </div>
+
+    </nav>
+</div>
+
+
+<router-outlet></router-outlet>

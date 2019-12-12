@@ -1,0 +1,73 @@
+version: '3'
+services:
+  payroll-mysql:
+    image: mysql:8.0.18
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - d:/payrolldb:/var/lib/mentor_on_Demand
+      - ./dbscripts:/docker-entrypoint-initdb.d
+
+  Eureka-Microservice:
+    image: eureka-discovery-app
+    build: Eureka-Microservice/.
+    ports:
+      - 3007:3007
+
+  search-microservice:
+    image: search-microservice-app
+    build: search-microservice/.
+    ports:
+      - 3003:3003
+    depends_on:
+      - payroll-mysql
+      - Eureka-Microservice
+    links:
+      - payroll-mysql
+      - Eureka-Microservice
+
+  Training-service:
+    image: Training-service-app
+    build: Training-service/.
+    ports:
+      - 3004:3004
+    depends_on:
+      - payroll-mysql
+      - Eureka-Microservice
+    links:
+      - payroll-mysql
+      - Eureka-Microservice
+
+  user-service:
+    image: user-service-app
+    build: user-service/.
+    ports:
+      - 3002:3002
+    depends_on:
+      - payroll-mysql
+      - Eureka-Microservice
+    links:
+      - payroll-mysql
+      - Eureka-Microservice
+
+
+  Zuul-gateway-MicroService:
+    image: zuul-gateway-app
+    build: Zuul-gateway-MicroService/.
+    ports:
+      - 3008:3008
+    depends_on:
+      - payroll-mysql
+      - Eureka-Microservice
+     
+    links:
+      - payroll-mysql
+      - Eureka-Microservice
+
+  IIHT:
+    image: IIHT-app
+    build: IIHT-799451-angular/.
+    ports:
+      - 4200:80

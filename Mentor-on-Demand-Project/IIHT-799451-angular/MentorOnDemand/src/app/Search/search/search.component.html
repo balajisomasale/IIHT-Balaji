@@ -1,0 +1,140 @@
+<div class="jumbotron text-center white">
+    <h1 class="display-3">Welcome to Mentor on Demand!</h1>
+    <h4>Select any Skill from the below Drop-Box</h4>
+    <hr>
+    <div class="black1">
+      
+      <select [(ngModel)]="skillSearchKey" (ngModelChange)="searchBySkill()" class="form-control" name="search"
+        placeholder="search">
+  
+        <option disabled selected value>Please select your Skill</option>
+        <option *ngFor="let skill of skillList" [value]="skill.name">{{skill.name}}</option>
+      </select>
+  
+      <div class="row mt-5">
+        <div class="alert alert-danger my-auto mx-auto" *ngIf="skillSearchKey == null">
+          Please select any Technology to search :)
+        </div>
+        <div class="alert alert-warning my-auto mx-auto" *ngIf="mentorList?.length == 0">
+          Sorry,no mentor with this given Technology :(
+        </div>
+      </div>
+      <div class="card-deck">
+        <div class="ml-5 mr-5" *ngFor="let mentorskill of mentorList">
+    
+          <div class="card text-white bg-secondary mb-3">
+            <div class="card-header">Skills of <strong>Mentor</strong></div>
+            <div class="card-body text-white">
+              <h5 class="card-title">Firstname :{{mentorskill.mentor.user.firstName}}</h5>
+              <h5 class="card-title">Lastname: {{mentorskill.mentor.user.lastName}}</h5>
+              <p class="card-text">Skills Known: {{mentorskill.skill.name}}</p>
+              <div class="card-text">
+                <div class="row">
+                  
+                    <div class="col-6">
+                 <div class="badge badge-success">Rating</div>:  {{mentorskill.selfRating}} <i class="material-icons md-31">star</i></div>
+             
+                  <div class="col-6">
+                  <span> <div class="badge badge-info">Experience(Y)</div>: <strong>{{mentorskill.yearsOfExperience}}</strong></span>
+                  </div>
+                </div>
+              </div>
+              <div class="row ">
+                <div class="ml-auto">
+                  <button type="button" class="btn navy mt-3"
+                    *ngIf="this.authService.loggedIn && this.clickname != mentorskill.mentor.linkedinURL"
+                    (click)="moreDetails(mentorskill)">
+  
+                    <i class="material-icons md-10  navy">view_headline </i>More Details
+                  </button>
+                  <button type="button" class="btn navy mt-3"
+                    *ngIf="this.authService.loggedIn && this.clickname == mentorskill.mentor.linkedinURL "
+                    (click)="lessDetails()">
+  
+                    <i class="material-icons md-10  red ">view_headline </i>Less Details
+                  </button>
+  
+                </div>
+              </div>
+              <div *ngIf="this.clickname==mentorskill.mentor.linkedinURL">
+                <div class="row mt-1">
+                  <div class="col-6">
+                    <p>Time Slots</p>
+                  </div>
+                  <div class="ml-auto">
+                    <p> <i class="material-icons md-10">
+                        access_time
+                      </i>{{mentorskill.mentor.timeslot}}</p>
+                  </div>
+                </div>
+  
+                <div class="row mt-1">
+                  <div class="col-6">
+                    <p>Exp in Mentoring</p>
+                  </div>
+                  <div class="ml-auto">
+                    <p>{{mentorskill.mentor.yearsOfExperience}} years</p>
+                  </div>
+                </div>
+  
+                <div class="row mt-1">
+                  <div class="col-5">
+                    <p>contact</p>
+                  </div>
+                  <div class="ml-auto">
+                    <p><i class="material-icons md-10">
+                        phone
+                      </i>{{mentorskill.mentor.user.contactNumber}}</p>
+                  </div>
+                </div>
+                <div class="row mt-1">
+                  <div class="col-6">
+                    <p>email</p>
+                  </div>
+                  <div class="ml-auto">
+                    <p><i class="material-icons md-10">
+                        mail_outline
+                      </i>{{mentorskill.mentor.user.userName}}</p>
+                  </div>
+                </div>
+                <div class="row mt-1">
+                  <div class="col-5">
+                    <p>Linkedin</p>
+                  </div>
+                  <div class="ml-auto">
+                    <p><a [href]="mentorskill.mentor.linkedinURL" target="_blank">{{mentorskill.mentor.linkedinURL}}</a>
+                    </p>
+                  </div>
+                </div>
+                <div *ngIf="this.authService.loggedIn" class="row">
+                    <div class="col-4"></div>
+                    <button class="btn btn-success mx-auto col-4 my-2 form-control" (click)="requestTraining(mentorskill.id)">Request Training</button>
+                    <div class="col-4"></div>
+                    <form class="col-12" [formGroup]="requestTrainingForm" (submit)="this.submitRequestTraining(requestTrainingForm.value,mentorskill)" *ngIf="requestTrainingMentorId == mentorskill.id">
+                        <div *ngIf="this.errorMessage!=null" class="alert-warning">
+                            {{this.errorMessage}}
+                        </div> 
+                        <label for="startDate" class="mt-2">Start Date</label>
+                        <input id="startDate" formControlName="startDate" type="date" placeholder="Select Start Date" class="form-control">
+                        <div class="text-warning" *ngIf="startDate.touched && startDate.invalid && startDate.errors.required">Start Date is required</div>
+                        <div class="text-warning" *ngIf="requestTrainingForm.get('startDate').hasError('nomatch')">Start Date cannot be before Today</div>
+                        <div class="text-warning" *ngIf="requestTrainingForm.get('startDate').hasError('nomatch1')">Start Date cannot be after End Date</div>
+                        <label for="endDate" class="mt-2">End Date</label>
+                        <input id="endDate" formControlName="endDate" type="date" placeholder="Select End Date" class="form-control">
+                        <div class="text-warning" *ngIf="endDate.touched && endDate.invalid && endDate.errors.required">End Date is required</div>
+                        <div class="text-warning" *ngIf="requestTrainingForm.get('endDate').hasError('nomatch')">End Date cannot be before Today</div>
+                        <div class="text-warning" *ngIf="requestTrainingForm.get('endDate').hasError('nomatch1')">End Date cannot be before Start Date</div>
+                        <button class="btn btn-danger form-control my-2" type="submit" [disabled]="!requestTrainingForm.valid">Send Request</button>
+                    </form>
+                </div>
+              </div>
+  
+  
+            </div>
+  
+          </div>
+  
+        </div>
+      </div>
+  
+    </div>
