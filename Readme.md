@@ -6,7 +6,7 @@
 
 
 # Suggestion : 
-==> Please run the Project// use "npm install" ... To get the node_modules.. Due to Size Constraint, It was excluded.
+==> Please run the Project// use `npm install ... To get the node_modules`.. Due to Size Constraint, It was excluded.
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.3.
 
 ==> Angular files are in https://github.com/balajisomasale/IIHT-FULL-STACK-Project-Certification/tree/master/Mentor-on-Demand-Project/IIHT-799451-angular
