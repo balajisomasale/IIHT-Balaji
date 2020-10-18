@@ -4,13 +4,14 @@
 
 
 
-Note:
 
--->Didnot upload node_modules in angular part.So use npm install to get it.
+# Suggestion : 
+==> Please run the Project// use "npm install" ... To get the node_modules.. Due to Size Constraint, It was excluded.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.3.
 
---> Angular files are in Mentor-on-Demand-Project/IIHT-799451-angular location
+==> Angular files are in https://github.com/balajisomasale/IIHT-FULL-STACK-Project-Certification/tree/master/Mentor-on-Demand-Project/IIHT-799451-angular
 
-Ports:
+## Ports:
 
 --> MySql is expected to run on 3306 port
 
@@ -41,12 +42,8 @@ Test Cases : Screenshots attached in following folders under IIHT_799451_screens
 	2) Junit Test cases
 	3) karma-testing
 	4) Postman
------------------
 
 
-
-Suggestion : Please run the Project// use "npm install" ... To get the node_modules.. Due to Size Constraint, It was excluded.
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.3.
 
 ## Development server
 
